@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import ReduxProvider from "../redux/provider/ReduxProvider";
+import AuthWrapper from "@/redux/provider/AuthWrapper";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,8 +15,11 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "Gym-Management",
-  description: "a well gym for gym lovers",
+  title: "Gymnasia",
+  description: "a heaven for gym lovers",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -24,7 +28,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+            <AuthWrapper>{children}</AuthWrapper>
+        </ReduxProvider>
       </body>
     </html>
   );

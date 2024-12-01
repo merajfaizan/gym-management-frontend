@@ -1,7 +1,12 @@
-export default function Home() {
+import Home from "@/component/home/Home";
+import NavbarWrapper from "@/component/shared/navbar/NavbarWrapper";
+
+export default function Page() {
   return (
     <div>
-      <h1>hello world from me</h1>
+      <NavbarWrapper>
+        <Home />
+      </NavbarWrapper>
     </div>
   );
 }
