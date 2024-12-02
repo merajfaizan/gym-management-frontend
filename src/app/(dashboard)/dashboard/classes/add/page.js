@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useGetAllTrainersQuery } from "@/redux/features/trainerApiSlice";
 import { useAddClassMutation } from "@/redux/features/classApiSlice";
+import Swal from "sweetalert2";
+import LoadingSpinner from "@/component/shared/spinner/LoadingSpinner";
 
 
 const ScheduleClass = () => {
@@ -12,9 +14,11 @@ const ScheduleClass = () => {
     trainer: "",
     img: "",
     day: "",
+    bookedTrainees: [],
   });
 
-  const { data: trainers, isLoading: isTrainersLoading } = useGetAllTrainersQuery();
+  const { data: trainers, isLoading: isTrainersLoading } =
+    useGetAllTrainersQuery();
   const [addClass, { isLoading: isAdding }] = useAddClassMutation();
 
   const handleChange = (e) => {
@@ -22,7 +26,8 @@ const ScheduleClass = () => {
   };
 
   const validateTime = (time) => {
-    const timePattern = /^[0-9]{1,2}:[0-9]{2}\s?(AM|PM|am|pm)\s-\s[0-9]{1,2}:[0-9]{2}\s?(AM|PM|am|pm)$/;
+    const timePattern =
+      /^[0-9]{1,2}:[0-9]{2}\s?(AM|PM|am|pm)\s-\s[0-9]{1,2}:[0-9]{2}\s?(AM|PM|am|pm)$/;
     return timePattern.test(time);
   };
 
@@ -30,23 +35,45 @@ const ScheduleClass = () => {
     e.preventDefault();
 
     if (!validateTime(formData.time)) {
-      alert("Invalid time format. Use 'HH:MM AM - HH:MM PM'");
+      Swal.fire({
+        icon: "warning",
+        title: "Warning",
+        text: "Invalid time format. Use 'HH:MM AM - HH:MM PM'",
+      });
       return;
     }
 
     try {
       await addClass(formData).unwrap();
-      alert("Class scheduled successfully!");
-      setFormData({ name: "", time: "", trainer: "", img: "", day: "" });
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Class scheduled successfully!",
+      });
+      setFormData({
+        name: "",
+        time: "",
+        trainer: "",
+        img: "",
+        day: "",
+        bookedTrainees: [],
+      });
     } catch (err) {
-      alert(err?.data?.message || "Failed to schedule class");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: err?.data?.message || "Class reserved successfully!",
+      });
     }
   };
 
-  if (isTrainersLoading) return <p>Loading trainers...</p>;
+  if (isTrainersLoading) return <LoadingSpinner />;
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white p-5 rounded shadow">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-lg mx-auto bg-white p-5 rounded shadow"
+    >
       <h1 className="text-2xl font-bold mb-5">Schedule a New Class</h1>
 
       <label className="block mb-3">
@@ -114,13 +141,19 @@ const ScheduleClass = () => {
           required
         >
           <option value="">Select Day</option>
-          {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(
-            (day) => (
-              <option key={day} value={day}>
-                {day}
-              </option>
-            )
-          )}
+          {[
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ].map((day) => (
+            <option key={day} value={day}>
+              {day}
+            </option>
+          ))}
         </select>
       </label>
 

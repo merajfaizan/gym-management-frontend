@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const trainerApi = createApi({
   reducerPath: "trainerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000",
+    baseUrl: "https://gym-management-backend-kappa.vercel.app",
     prepareHeaders: (headers, { getState }) => {
       const { user, token } = getState().auth; // Retrieve user data from the auth slice
       if (token) {

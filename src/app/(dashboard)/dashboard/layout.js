@@ -3,7 +3,7 @@ import Sidebar from "../../../component/shared/sidebar/Sidebar";
 
 const AdminDashboard = ({ children }) => {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute allowedRoles={["admin", "trainer"]}>
       <div className="flex flex-row bg-white text-black">
         <div>
           <Sidebar />

@@ -3,6 +3,8 @@
 import { useAddTrainerMutation } from "@/redux/features/trainerApiSlice";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+
 
 const AddTrainer = () => {
   const [avatar, setAvatar] = useState("");
@@ -17,31 +19,35 @@ const AddTrainer = () => {
 
   // Get user and token from Redux store
   const { user, token } = useSelector((state) => state.auth);
-  console.log(token)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (user?.role !== "admin") {
-      console.error("You are not authorized to add a trainer.");
-      alert("You are not authorized to add a trainer.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "You are not authorized to add a trainer.",
+      });
       return;
     }
 
     try {
-      const response = await addTrainer(
-        {
-          avatar,
-          name,
-          role,
-          subject,
-          description,
-          gender,
-        }
-      ).unwrap();
+      const response = await addTrainer({
+        avatar,
+        name,
+        role,
+        subject,
+        description,
+        gender,
+      }).unwrap();
 
-      console.log(response);
-      alert("Trainer added successfully!");
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Trainer added successfully!",
+      });
+
       setAvatar("");
       setName("");
       setRole("trainer");

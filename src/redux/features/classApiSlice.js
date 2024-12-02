@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const classApi = createApi({
   reducerPath: "classApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000",
+    baseUrl: "https://gym-management-backend-kappa.vercel.app",
     prepareHeaders: (headers, { getState }) => {
       const { user, token } = getState().auth; // Retrieve user data from the auth slice
       if (token) {
@@ -26,12 +26,39 @@ export const classApi = createApi({
       query: () => "/classes",
       providesTags: ["Class"],
     }),
-    // Get class details
+    getAllClassesWithTrainees: builder.query({
+      query: () => "/classes-with-trainees",
+      providesTags: ["Class"],
+    }),
+
+    getClassesByDay: builder.query({
+      query: () => "/classes/by-day",
+      providesTags: ["Class"],
+    }),
     getClassDetails: builder.query({
       query: (id) => `/classes/${id}`,
       providesTags: ["Class"],
     }),
+    getBookedClassesByUser: builder.query({
+      query: (userId) => `/booked-classes/${userId}`,
+      providesTags: ["Class"],
+    }),
+    reserveClass: builder.mutation({
+      query: ({ classId, userId }) => ({
+        url: `/classes/${classId}/reserve`,
+        method: "PUT",
+        body: { userId },
+      }),
+    }),
   }),
 });
 
-export const { useAddClassMutation, useGetAllClassesQuery, useGetClassDetailsQuery } = classApi;
+export const {
+  useAddClassMutation,
+  useGetAllClassesQuery,
+  useGetAllClassesWithTraineesQuery,
+  useGetBookedClassesByUserQuery,
+  useGetClassDetailsQuery,
+  useGetClassesByDayQuery,
+  useReserveClassMutation,
+} = classApi;

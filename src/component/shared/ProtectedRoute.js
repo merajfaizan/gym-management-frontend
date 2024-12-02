@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import LoadingSpinner from "./spinner/LoadingSpinner";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, allowedRoles }) => {
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
 
@@ -12,20 +13,21 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const checkUserAuth = async () => {
-      if (!user) {
-        router.push("/login");
+      if (!user || !allowedRoles.includes(user.role)) {
+        router.push("/login"); // Redirect to login if not authorized
       } else {
-        setIsLoading(false);
+        setIsLoading(false); // Allow access if the user role matches
       }
     };
 
     checkUserAuth();
-  }, [user, router]);
+  }, [user, router, allowedRoles]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner /> // Loading state while role is being checked
   }
-  return <>{children}</>;
+
+  return <>{children}</>; // Render the protected content
 };
 
 export default ProtectedRoute;

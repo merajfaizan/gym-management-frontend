@@ -12,10 +12,9 @@ import { logout } from "@/redux/slices/authSlice";
 
 const Navbar = ({ toggle }) => {
   const [navbar, setNavbarColor] = useState(false);
-  const { user, token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
-  console.log(user, token);
 
   const changeBackground = () => {
     if (window.scrollY >= 50) {
@@ -39,15 +38,20 @@ const Navbar = ({ toggle }) => {
     localStorage.removeItem("user");
 
     dispatch(logout());
-    router.push("/login");
   };
 
   return (
     <nav className={navbar ? "navbar-active-color" : "navbar"}>
       <HiMenu className="menu-bars" onClick={toggle} />
-      <Link href="/dashboard" className="menu-items">
-        Dashboard
-      </Link>
+      {user?.role === "admin" || user?.role === "trainer" ? (
+        <Link href="/dashboard" className="menu-items">
+          Dashboard
+        </Link>
+      ) : (
+        <Link href="/classes/my-classes" className="menu-items">
+          My Classes
+        </Link>
+      )}
       <Link href="/classes" className="menu-items">
         Classes
       </Link>
@@ -58,7 +62,9 @@ const Navbar = ({ toggle }) => {
         Contact
       </Link>
       {user ? (
-          <div onClick={handleLogout} className="btn-login">Logout</div>
+        <button onClick={handleLogout} className="btn-login hidden md:block ">
+          Logout
+        </button>
       ) : (
         <Link href="/login" className="">
           <div className="btn-login">Login</div>

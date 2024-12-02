@@ -3,6 +3,7 @@ import Link from "next/link";
 import "./navbar.css";
 import { CgClose } from "react-icons/cg";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
 const DropdownContainer = styled.div`
   position: fixed;
@@ -19,6 +20,16 @@ const DropdownContainer = styled.div`
   top: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
 `;
 const Dropdown = ({ isOpen, toggle }) => {
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  // Logout function
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    dispatch(logout());
+  };
   return (
     <DropdownContainer isOpen={isOpen} onClick={toggle}>
       <CgClose className="menu-close" onClick={toggle} />
@@ -26,18 +37,30 @@ const Dropdown = ({ isOpen, toggle }) => {
         <Link href="/" className="dropdown-items">
           Home
         </Link>
-        <Link href="/dashboard" className="dropdown-items">
-          Dashboard
-        </Link>
+        {user?.role === "admin" || user?.role === "trainer" ? (
+          <Link href="/dashboard" className="menu-items">
+            Dashboard
+          </Link>
+        ) : (
+          <Link href="/my-classes" className="menu-items">
+            My Classes
+          </Link>
+        )}
         <Link href="/classes" className="dropdown-items">
           Classes
         </Link>
         <Link href="/contact" className="dropdown-items">
           Contact
         </Link>
-        <Link href="/login" className="dropdown-items">
-          Login
-        </Link>
+        {!user ? (
+          <Link href="/login" className="dropdown-items">
+            Login
+          </Link>
+        ) : (
+          <button onClick={handleLogout} className="btn-login dropdown-items">
+            Logout
+          </button>
+        )}
       </div>
     </DropdownContainer>
   );

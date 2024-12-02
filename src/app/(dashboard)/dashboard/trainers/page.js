@@ -6,6 +6,9 @@ import {
 } from "@/redux/features/trainerApiSlice";
 import Link from "next/link";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import LoadingSpinner from "@/component/shared/spinner/LoadingSpinner";
+
 
 const TrainersPage = () => {
   const {
@@ -21,13 +24,17 @@ const TrainersPage = () => {
     try {
       const response = await deleteTrainer(id).unwrap();
       refetch();
-      alert(response?.message);
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: response?.message || "Delete successful!",
+      });
     } catch (err) {
       console.log("Error deleting trainer:", err);
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />
   if (isError) return <p>Error loading trainers.</p>;
 
   return (

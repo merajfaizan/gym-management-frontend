@@ -7,6 +7,9 @@ import {
   useUpdateTrainerMutation,
 } from "@/redux/features/trainerApiSlice";
 import { useParams } from "next/navigation";
+import Swal from "sweetalert2";
+import LoadingSpinner from "@/component/shared/spinner/LoadingSpinner";
+
 
 const EditTrainer = () => {
   const { id } = useParams();
@@ -41,7 +44,12 @@ const EditTrainer = () => {
     e.preventDefault();
 
     if (user?.role !== "admin") {
-      alert("You are not authorized to update trainer details.");
+      Swal.fire({
+        icon: "warning",
+        title: "Warning",
+        text: "You are not authorized to update trainer details.",
+      });
+      
       return;
     }
 
@@ -50,15 +58,20 @@ const EditTrainer = () => {
         id,
         data: { avatar, name, role, subject, description, gender },
       }).unwrap();
-      console.log(response)
-      alert("Trainer updated successfully!", response);
+
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Trainer updated successfully!",
+      });
+      
       refetch()
     } catch (error) {
-      console.error("Error updating trainer:", error);
+      console.log("Error updating trainer:", error);
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />
   if (isError) return <p>Error loading trainer details.</p>;
 
   return (

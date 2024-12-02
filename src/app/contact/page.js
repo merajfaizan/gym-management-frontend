@@ -5,70 +5,17 @@ import LOCATION_CYAN from "../../assets/logos/location-cyan.png";
 import PHONE_CYAN from "../../assets/logos/phone-cyan.png";
 import EMAIL_CYAN from "../../assets/logos/email-cyan.png";
 import CLOCK_CYAN from "../../assets/logos/clock-cyan.png";
-import JOHN from "../../assets/photos/john.png";
-import ANYA from "../../assets/photos/anya.png";
-import GREG from "../../assets/photos/greg.png";
-import CLARA from "../../assets/photos/clara.png";
-import LEO from "../../assets/photos/leo.png";
-import MARIANA from "../../assets/photos/mariana.png";
 import CHEVRON from "../../assets/logos/chevron-up.png";
-import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import NavbarWrapper from "@/component/shared/navbar/NavbarWrapper";
-
-const contactData = [
-  {
-    avatar: JOHN,
-    name: "John",
-    role: "manager",
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla quis diam. Donec vitae arcu.",
-    gender: "male",
-  },
-  {
-    avatar: ANYA,
-    name: "Anya",
-    role: "fitness coach",
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla quis diam. Donec vitae arcu.",
-    gender: "female",
-  },
-  {
-    avatar: GREG,
-    name: "Greg",
-    role: "fitness coach",
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla quis diam. Donec vitae arcu.",
-    gender: "male",
-  },
-  {
-    avatar: CLARA,
-    name: "Clara",
-    role: "fitness coach",
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla quis diam. Donec vitae arcu.",
-    gender: "female",
-  },
-  {
-    avatar: LEO,
-    name: "Leo",
-    role: "boxing coach",
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla quis diam. Donec vitae arcu.",
-    gender: "male",
-  },
-  {
-    avatar: MARIANA,
-    name: "Mariana",
-    role: "boxing coach",
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla quis diam. Donec vitae arcu.",
-    gender: "female",
-  },
-];
+import { useGetAllTrainersQuery } from "@/redux/features/trainerApiSlice";
+import classNames from "classnames";
+import LoadingSpinner from "@/component/shared/spinner/LoadingSpinner";
 
 const Contact = () => {
+  const { data: trainers, isLoading, error } = useGetAllTrainersQuery();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const values = {
@@ -76,8 +23,11 @@ const Contact = () => {
       email: e.target.email.value,
       message: e.target.message.value,
     };
-    console.log(values);
   };
+
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <p>Error fetching trainers: {error.message}</p>;
+
   return (
     <NavbarWrapper>
       <div className="container">
@@ -88,19 +38,19 @@ const Contact = () => {
               <h2>London gym</h2>
               <ul>
                 <li>
-                  <Image src={LOCATION_CYAN} alt="" />
+                  <Image src={LOCATION_CYAN} alt="location" />
                   416 Marion Drive
                 </li>
                 <li>
-                  <Image src={PHONE_CYAN} alt="" />
+                  <Image src={PHONE_CYAN} alt="phone" />
                   +123 456 789 000
                 </li>
                 <li>
-                  <Image src={EMAIL_CYAN} alt="" />
+                  <Image src={EMAIL_CYAN} alt="email" />
                   info@strike.com
                 </li>
                 <li>
-                  <Image src={CLOCK_CYAN} alt="" />
+                  <Image src={CLOCK_CYAN} alt="clock" />
                   MO - SU: 0:00 - 0:00
                 </li>
               </ul>
@@ -119,14 +69,12 @@ const Contact = () => {
                       <p className="input-text">Email</p>
                       <input type="text" name="email" required />
                     </div>
-                    <div className="message"></div>
                   </div>
                   <div className="second-row">
                     <p className="input-text">Your message</p>
                     <textarea
-                      clasname="message"
+                      className="message"
                       name="message"
-                      id=""
                       rows="8"
                       required
                     ></textarea>
@@ -141,26 +89,23 @@ const Contact = () => {
         <section id="team">
           <h1 className="team-title">Meet the team</h1>
           <div className="team-container">
-            {contactData.map(
-              ({ avatar, name, role, description, gender }, index) => {
+            {trainers?.map(
+              ({ _id, avatar, name, role, description, gender }) => {
                 const className_name = classNames({
-                  john: name === "John",
-                  anya: name === "Anya",
-                  greg: name === "Greg",
-                  clara: name === "Clara",
-                  leo: name === "Leo",
-                  mariana: name === "Mariana",
+                  male: gender === "male",
+                  female: gender === "female",
                 });
 
                 return (
-                  <div
-                    key={index}
-                    className={`team-card ${
-                      gender === "male" ? "male" : "female"
-                    } ${className_name}`}
-                  >
+                  <div key={_id} className={`team-card ${className_name}`}>
                     <div className="img-box">
-                      <Image className="avatar" src={avatar} alt="avatar" />
+                      <Image
+                        className="avatar rounded-full"
+                        src={avatar}
+                        alt={`${name}'s avatar`}
+                        width={150}
+                        height={150}
+                      />
                     </div>
                     <h3 className="role">{role}</h3>
                     <div className="content-box">
@@ -168,7 +113,9 @@ const Contact = () => {
                         src={CHEVRON}
                         className="chevron"
                         alt="chevron"
-                      ></Image>
+                        width={20}
+                        height={20}
+                      />
                       <h2 className="name">{name}</h2>
                       <div className="description-box">
                         <p className="description">{description}</p>

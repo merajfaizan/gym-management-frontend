@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useGetAllClassesQuery } from "../../../../redux/features/classApiSlice";
+import { useGetAllClassesWithTraineesQuery  } from "@/redux/features/classApiSlice";
 import LoadingSpinner from "@/component/shared/spinner/LoadingSpinner";
 
-const ClassesPage = () => {
-  const { data: classes, error, isLoading } = useGetAllClassesQuery();
+const TrainerClasses = () => {
+  const { data: classes, error, isLoading } = useGetAllClassesWithTraineesQuery ();
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <LoadingSpinner />
   if (error) return <p>Error loading classes.</p>;
 
   return (
@@ -33,6 +33,20 @@ const ClassesPage = () => {
               <p className="text-gray-600">{classItem.day}</p>
               <p className="text-gray-500">{classItem.time}</p>
             </div>
+            <div className="p-4">
+              <h1 className="text-xl font-semibold">Trainees</h1>
+              <div>
+                {classItem.bookedTrainees.length > 0 ? (
+                  classItem.bookedTrainees.map((trainee) => (
+                    <li className="list-decimal" key={trainee._id}>
+                      {trainee.name}
+                    </li>
+                  ))
+                ) : (
+                  <p>No trainees have reserved this class.</p>
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -40,4 +54,4 @@ const ClassesPage = () => {
   );
 };
 
-export default ClassesPage;
+export default TrainerClasses;

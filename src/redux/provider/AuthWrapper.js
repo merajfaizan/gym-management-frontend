@@ -11,10 +11,10 @@ const AuthWrapper = ({ children }) => {
     const token = localStorage.getItem("token");
 
     if (token) {
-      const user = JSON.parse(localStorage.getItem("user")); 
+      const user = JSON.parse(localStorage.getItem("user"));
       dispatch(setUser({ user, token }));
     } else {
-      dispatch(logout())
+      dispatch(logout());
     }
   }, [dispatch]);
 

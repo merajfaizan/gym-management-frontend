@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Gymnasia - Gym Class Scheduling and Membership Management System
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+The **Gymnasia** system is designed to manage gym operations efficiently by defining roles for Admin, Trainer, and Trainee.
+
+- **Admin**: Responsible for creating and managing trainers, scheduling classes, and assigning trainers. Admins can schedule up to 5 classes per day, each lasting 2 hours.
+- **Trainer**: Trainers conduct assigned classes and can view their schedules but cannot create or manage trainee profiles.
+- **Trainee**: Trainees can create/manage their profiles and book classes with a capacity limit of 10 trainees per class.
+
+The system enforces robust business rules for scheduling, booking, and user access, with JWT-based authentication and error handling.
+
+---
+
+## Credentials
+
+- Admin: { Email: admin@gmail.com , Password: 123456 }
+- Trainer: { Email: trainer@gmail.com, Password: 123456 }
+- Trainee: { Email: trainee@gmail.com, Password: 123456 }
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  https://github.com/merajfaizan/gym-management-frontend.git
+  cd gymnasia
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+  cd gymnasia
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Install dependencies
 
-## Learn More
+```bash
+  npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  npm run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Demo
 
-## Deploy on Vercel
+Live Link [https://merajfaizan.vercel.app/]
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Documentation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For Backend code visit my this repo
+
+[Backend repo](https://github.com/merajfaizan/gym-management-backend)
