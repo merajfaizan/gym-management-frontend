@@ -47,7 +47,7 @@ Start the server
 
 ## Demo
 
-Live Link [https://merajfaizan.vercel.app/]
+Live Link [https://gym-management-frontend-lemon.vercel.app/]
 
 ## Documentation
 
