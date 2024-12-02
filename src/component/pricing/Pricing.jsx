@@ -9,7 +9,7 @@ const Pricing = () => {
     <section id="membership">
       <div className="membership-container">
         <h1>
-          Its your time to <span>strike!</span>
+          Its your time to <span>Gymnasia!</span>
         </h1>
         <h2 className="plans-h2">Membership plans</h2>
 
@@ -34,9 +34,9 @@ const Pricing = () => {
               <li> - Access to boxing gym</li>
               <li> - Group lessons</li>
               <li> - Free drinks</li>
-              <li> - Strike merchandise</li>
+              <li> - Gymnasia merchandise</li>
             </ul>
-            <div className="btn-strike">Strike</div>
+            <div className="btn-strike">Gymnasia</div>
           </div>
 
           <div className="membership-card">

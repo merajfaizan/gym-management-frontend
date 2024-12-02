@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="row1">
           <div className="col1">
             <h3 className="footer-title">
-              <span className="footer-underline">Strike gym</span>
+              <span className="footer-underline">Gymnasia gym</span>
             </h3>
             <ul className="footer-text">
               <li>London</li>
@@ -50,7 +50,7 @@ const Footer = () => {
         <div className="row2">
           <div className="col3">
             <Image src={LOGO} alt="Strike" />
-            <h3 className="footer-strike-title">Strike fitness</h3>
+            <h3 className="footer-strike-title">Gymnasia fitness</h3>
           </div>
         </div>
 
@@ -60,14 +60,14 @@ const Footer = () => {
               <span className="footer-underline">Get in touch</span>
             </h3>
             <ul className="footer-text">
-              <li>info@strike.com</li>
+              <li>info@Gymnasia.com</li>
               <li>+123 456 789 000</li>
             </ul>
           </div>
 
           <div className="col5">
             <h3 className="footer-title">
-              <span className="footer-underline">Strike socials</span>
+              <span className="footer-underline">Gymnasia socials</span>
             </h3>
             <span></span>
             <ul className="footer-text">

@@ -19,7 +19,7 @@ const DropdownContainer = styled.div`
   opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
   top: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
 `;
-const Dropdown = ({ isOpen, toggle }) => {
+const Dropdown = ({isOpen, toggle}) => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -38,11 +38,11 @@ const Dropdown = ({ isOpen, toggle }) => {
           Home
         </Link>
         {user?.role === "admin" || user?.role === "trainer" ? (
-          <Link href="/dashboard" className="menu-items">
+          <Link href="/dashboard" className="dropdown-items">
             Dashboard
           </Link>
         ) : (
-          <Link href="/my-classes" className="menu-items">
+          <Link href="/my-classes" className="dropdown-items">
             My Classes
           </Link>
         )}
@@ -52,15 +52,6 @@ const Dropdown = ({ isOpen, toggle }) => {
         <Link href="/contact" className="dropdown-items">
           Contact
         </Link>
-        {!user ? (
-          <Link href="/login" className="dropdown-items">
-            Login
-          </Link>
-        ) : (
-          <button onClick={handleLogout} className="btn-login dropdown-items">
-            Logout
-          </button>
-        )}
       </div>
     </DropdownContainer>
   );

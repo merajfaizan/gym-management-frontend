@@ -13,7 +13,7 @@ const NavbarWrapper = ({ children }) => {
   return (
     <>
       <Navbar toggle={toggle} />
-      <Dropdown isopen={isOpen} toggle={toggle} />
+      <Dropdown isOpen={isOpen} toggle={toggle} />
       {children}
       <Footer />
     </>

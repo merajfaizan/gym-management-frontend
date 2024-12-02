@@ -10,7 +10,7 @@ const Membership = () => {
       <div className="membership-container">
         <Fade bottom triggerOnce="true">
           <h1>
-            It&apos;s your time to <span>strike!</span>
+            It&apos;s your time to <span>Gymnasia!</span>
           </h1>
           <h2 className="plans-h2">Membership plans</h2>
         </Fade>
@@ -37,9 +37,9 @@ const Membership = () => {
                 <li> - Access to boxing gym</li>
                 <li> - Group lessons</li>
                 <li> - Free drinks</li>
-                <li> - Strike merchandise</li>
+                <li> - Gymnasia merchandise</li>
               </ul>
-              <div className="btn-strike">Strike</div>
+              <div className="btn-strike">Gymnasia</div>
             </div>
 
             <div className="membership-card">

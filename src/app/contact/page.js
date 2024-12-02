@@ -47,7 +47,7 @@ const Contact = () => {
                 </li>
                 <li>
                   <Image src={EMAIL_CYAN} alt="email" />
-                  info@strike.com
+                  info@gymnasia.com
                 </li>
                 <li>
                   <Image src={CLOCK_CYAN} alt="clock" />

@@ -56,7 +56,7 @@ const Navbar = ({ toggle }) => {
         Classes
       </Link>
       <Link href="/">
-        <Image src={LOGO} alt="strike" className="strike" />
+        <Image src={LOGO} alt="gymnasia" className="strike" />
       </Link>
       <Link href="/contact" className="menu-items">
         Contact
