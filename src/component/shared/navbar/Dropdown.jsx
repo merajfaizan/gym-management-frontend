@@ -42,7 +42,7 @@ const Dropdown = ({isOpen, toggle}) => {
             Dashboard
           </Link>
         ) : (
-          <Link href="/my-classes" className="dropdown-items">
+          <Link href="/classes/my-classes" className="dropdown-items">
             My Classes
           </Link>
         )}
